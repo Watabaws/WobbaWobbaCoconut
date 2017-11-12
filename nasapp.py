@@ -16,7 +16,12 @@ def dis_my_werk(): #Dis my werk:
 	ttl1 = nasa_dict["title"] #Get the title
 	url1 = nasa_dict["url"] #Git the image url
 	desc1 = nasa_dict["explanation"] #Gut the explanation for the image
-	return render_template("randpic.html", img1_url = url1, img1_desc = desc1, img1_title = ttl1) #Send it all off to our lovely and very conveniant template
+
+	url_ttl = ttl1.split(" ")
+	url_ttl = "+".join(url_ttl)
+	giphy_data = json.loads(urllib2.urlopen("http://api.giphy.com/v1/gifs/search?q=" + url_ttl + "&api_key=ROTck7GBTWstR46julfK45by2RXGG25N&limit=5").read())
+	gifrl = giphy_data["data"][0]["images"]["original"]["url"]
+	return render_template("randpic.html", img1_url = url1, img1_desc = desc1, img1_title = ttl1, gif = gifrl) #Send it all off to our lovely and very conveniant template
 
 #The usua
 if __name__ == "__main__":
